@@ -4,13 +4,13 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="3IrOzXSVd5xN3e1H78Ni-6" value="Taula" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="3IrOzXSVd5xN3e1H78Ni-6" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;TAULA&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;startSize=40;" vertex="1" parent="1">
           <mxGeometry x="120" y="150" width="230" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="3IrOzXSVd5xN3e1H78Ni-17" value="TAGS" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="3IrOzXSVd5xN3e1H78Ni-17" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;TAGS&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;startSize=40;" vertex="1" parent="1">
           <mxGeometry x="380" y="150" width="230" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="3IrOzXSVd5xN3e1H78Ni-18" value="COMANDA" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="3IrOzXSVd5xN3e1H78Ni-18" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;COMANDA&lt;/font&gt;" style="swimlane;whiteSpace=wrap;html=1;startSize=40;" vertex="1" parent="1">
           <mxGeometry x="250" y="420" width="230" height="200" as="geometry" />
         </mxCell>
       </root>
