@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "Please enter a valid WebSocket URL", Toast.LENGTH_SHORT).show();
                 }
 
-                createXML(userName, serverUrl);
                 setContentView(R.layout.main_menu);
+                createXML(userName, serverUrl);
             });
         }
         }
@@ -183,5 +183,18 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void deleteXML() {
+        if (file.exists()) {
+            boolean deleted = file.delete();
+            if (deleted) {
+                Toast.makeText(this, "XML file deleted successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed to delete XML file", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "XML file does not exist", Toast.LENGTH_SHORT).show();
+        }
     }
 }
