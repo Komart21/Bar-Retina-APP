@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(WebSocket webSocket, Throwable t, okhttp3.Response response) {
                 runOnUiThread(() -> Toast.makeText(MainActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> System.out.println("Error: " + t.getMessage()));
             }
         });
 
