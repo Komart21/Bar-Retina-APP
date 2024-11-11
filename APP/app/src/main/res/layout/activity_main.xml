@@ -8,7 +8,7 @@
     android:gravity="center"
     android:padding="16dp">
 
-    <!-- Título -->
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -20,10 +20,9 @@
         android:textSize="48sp"
         android:textStyle="bold" />
 
-    <!-- Campo de URL del servidor -->
     <EditText
         android:id="@+id/serverUrl"
-        android:layout_width="match_parent"
+        android:layout_width="339dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:autofillHints=""
@@ -35,10 +34,9 @@
         android:textColor="#4A4A4A"
         android:textColorHint="#4A4A4A" />
 
-    <!-- Campo de nombre -->
     <EditText
         android:id="@+id/userName"
-        android:layout_width="match_parent"
+        android:layout_width="336dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:autofillHints=""
@@ -50,7 +48,7 @@
         android:textColor="#4A4A4A"
         android:textColorHint="#4A4A4A" />
 
-    <!-- Botón de conexión -->
+
     <Button
         android:id="@+id/connectButton"
         android:layout_width="wrap_content"
