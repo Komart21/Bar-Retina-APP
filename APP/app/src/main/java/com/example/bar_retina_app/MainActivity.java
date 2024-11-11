@@ -20,9 +20,16 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
 
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft;
+import org.java_websocket.drafts.Draft_6455;
+import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONObject;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class MainActivity extends AppCompatActivity {
-    private WebSocket webSocket;
-    private OkHttpClient client;
     private EditText serverUrlEditText;
     private EditText userNameEditText;
     private Button connectButton;
@@ -30,57 +37,63 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        
         setContentView(R.layout.activity_main);
 
         serverUrlEditText = findViewById(R.id.serverUrl);
         userNameEditText = findViewById(R.id.userName);
         connectButton = findViewById(R.id.connectButton);
 
-        client = new OkHttpClient();
 
         connectButton.setOnClickListener(view -> {
             String serverUrl = serverUrlEditText.getText().toString().trim();
             if (!serverUrl.isEmpty()) {
-                connectToWebSocket(serverUrl);
+                ConnectToServer(serverUrl);
             } else {
                 Toast.makeText(this, "Please enter a valid WebSocket URL", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void connectToWebSocket(String url) {
-        Request request = new Request.Builder().url(url).build();
-        webSocket = client.newWebSocket(request, new WebSocketListener() {
-            @Override
-            public void onOpen(WebSocket webSocket, okhttp3.Response response) {
-                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT).show());
-                String userName = userNameEditText.getText().toString().trim();
-                webSocket.send("Hello, " + userName);
-            }
+    protected void ConnectToServer(String url) {
+        WebSocketClient client = null;
 
-            @Override
-            public void onMessage(WebSocket webSocket, String text) {
-                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Received: " + text, Toast.LENGTH_SHORT).show());
-            }
+        try {
+            client = new WebSocketClient(new URI(url), (Draft) new Draft_6455()) {
+                @Override
+                public void onMessage(String message) { onMessageListener(message); }
 
-            @Override
-            public void onMessage(WebSocket webSocket, ByteString bytes) {
-                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Received bytes", Toast.LENGTH_SHORT).show());
-            }
+                @Override
+                public void onOpen(ServerHandshake handshake) {
+                    System.out.println("Connected to: " + getURI());
 
-            @Override
-            public void onClosing(WebSocket webSocket, int code, String reason) {
-                webSocket.close(1000, null);
-                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Closing: " + reason, Toast.LENGTH_SHORT).show());
-            }
+                    try {
+                        JSONObject message = new JSONObject();
 
-            @Override
-            public void onFailure(WebSocket webSocket, Throwable t, okhttp3.Response response) {
-                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show());
-                runOnUiThread(() -> System.out.println("Error: " + t.getMessage()));
-            }
-        });
+                        message.put("message", "Hola");
+                        message.put("type", "connection");
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
 
-        client.dispatcher().executorService().shutdown();
+                @Override
+                public void onClose(int code, String reason, boolean remote) {
+                    System.out.println("Disconnected from: " + getURI());
+                }
+
+                @Override
+                public void onError(Exception ex) { ex.printStackTrace(); }
+            };
+            client.connect();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            System.out.println("Error: " + url + " no és una direcció URI de WebSocket vàlida");
+        }
+    }
+
+    protected void onMessageListener (String message) {
+        System.out.println(message + "\n");
     }
 }
