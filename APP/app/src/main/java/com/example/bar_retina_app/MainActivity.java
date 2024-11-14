@@ -68,8 +68,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         file = new File(getFilesDir(), "CONFIG.xml");
+
+        deleteXML();
 
         if (file.exists()) {
 
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 String userName = userNameEditText.getText().toString().trim();
                 if (!serverUrl.isEmpty()) {
                     ConnectToServer(serverUrl);
-                    Toast.makeText(this, "Connected to: " + serverUrl, Toast.LENGTH_SHORT).show();
+                    Log.i("WSS Client", "Connected to: " + serverUrl);
                 } else {
                     Toast.makeText(this, "Please enter a valid WebSocket URL", Toast.LENGTH_SHORT).show();
                 }
@@ -142,7 +143,22 @@ public class MainActivity extends AppCompatActivity {
                                     for (int i = 0; i < products.getLength(); i++) {
                                         Element product = (Element) products.item(i);
                                         productes.add(product);
+                                    }
 
+                                    for (Element producte : productes) {
+                                        String id = producte.getAttribute("id");
+                                        String tags = producte.getAttribute("tags");
+                                        NodeList nodeList0 = producte.getElementsByTagName("name");
+                                        String name = nodeList0.item(0).getTextContent();
+                                        NodeList nodeList1 = producte.getElementsByTagName("description");
+                                        String description = nodeList1.item(0).getTextContent();
+                                        NodeList nodeList2 = producte.getElementsByTagName("price");
+                                        String price = nodeList2.item(0).getTextContent();
+                                        NodeList nodeList3 = producte.getElementsByTagName("image");
+                                        String image = nodeList3.item(0).getTextContent();
+
+                                        Product product = new Product(id, tags, name, description, price, image);
+                                        ProductsActivity.products.add(product);
                                     }
 
 
