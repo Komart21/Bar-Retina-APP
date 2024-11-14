@@ -1,5 +1,7 @@
 package com.example.bar_retina_app;
 
+import static java.util.Collections.sort;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,26 +23,31 @@ public class ProductsActivity extends AppCompatActivity {
     private ListView listView;
     private CustomAdapter productoAdapter;
 
+    public static Command command;
+
     private Spinner tagSpinner;
     public static ArrayList<Product> products = new ArrayList<>();
 
     private ArrayList<Product> productosFiltrados = new ArrayList<>();
 
-    private static ArrayList<String> tags = new ArrayList<>(Arrays.asList("all","soda", "zero-sugar", "caffeine-free", "water", "non-carbonated",
+    private static ArrayList<String> temptags = new ArrayList<>(Arrays.asList("soda", "zero-sugar", "caffeine-free", "water", "non-carbonated",
             "sparkling water", "isotonic", "beer", "alcohol-free", "baguette",
             "eggs", "meat", "lactose", "seafood", "spicy", "poultry",
             "vegetarian", "sandwich", "mixed", "burger", "main", "fish",
             "starter", "potato"));
+
+    private static ArrayList<String> tags = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
 
-        products.add(new Product("1", "beer", "Free-damn", "Descripción 1", "2.0", "image_url_1"));
-        products.add(new Product("2", "soda", "Coca-Cola", "Descripción 2", "2.4", "image_url_2"));
-        products.add(new Product("3", "water", "Viladrau Water", "Descripción 3", "1.5", "image_url_3"));
-        products.add(new Product("4", "soda, zer-sugar", "Pepsi-Zero", "Descripción 4", "2.3", "image_url_4"));
+        sort(temptags);
+        tags.add("all");
+        for (String tag : temptags) {
+            tags.add(tag);
+        }
 
         productosFiltrados.addAll(products);
 
