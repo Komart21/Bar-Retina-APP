@@ -70,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         file = new File(getFilesDir(), "CONFIG.xml");
 
-        deleteXML();
-
         if (file.exists()) {
 
             String url = getURL();

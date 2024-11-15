@@ -26,6 +26,8 @@
 
         </activity>
 
+        <activity android:name=".CommandActivity" />
+
         <activity
             android:name=".ProductsActivity"
             android:theme="@style/Theme.AppCompat.DayNight"/>

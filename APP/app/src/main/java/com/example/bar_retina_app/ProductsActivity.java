@@ -2,11 +2,13 @@ package com.example.bar_retina_app;
 
 import static java.util.Collections.sort;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -40,8 +42,19 @@ public class ProductsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+
+        Button comandaButton = findViewById(R.id.comandaButton);
+
+        comandaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductsActivity.this, CommandActivity.class);
+                startActivity(intent);
+            }
+        });
 
         sort(temptags);
         tags.add("all");
@@ -99,6 +112,8 @@ public class ProductsActivity extends AppCompatActivity {
 
         productoAdapter.notifyDataSetChanged();
     }
+
+
 }
 
 

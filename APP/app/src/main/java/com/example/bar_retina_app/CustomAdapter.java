@@ -56,6 +56,10 @@ public class CustomAdapter extends ArrayAdapter<Product> {
             }
 
             String mensaje = "Producto agregado: " + producto.getName() + " - Cantidad: " + cantidad;
+            for (int i = 1; i <= cantidad; i++) {
+                CommandActivity.command.addProduct(producto);
+            }
+
             Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show();
         });
 

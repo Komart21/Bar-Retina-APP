@@ -8,7 +8,7 @@ public class Product {
     private String price;
     private String image;
 
-    // Constructor
+
     public Product(String id, String tags, String name, String description, String price, String image) {
         this.id = id;
         this.tags = tags;

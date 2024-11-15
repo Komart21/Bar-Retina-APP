@@ -1,6 +1,8 @@
 package com.example.bar_retina_app;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Command {
     private int id;
@@ -49,5 +51,18 @@ public class Command {
 
     public void setBartender(String bartender) {
         this.bartender = bartender;
+    }
+
+    public List<CommandProduct> getGroupedProducts() {
+        HashMap<String, CommandProduct> groupedMap = new HashMap<>();
+
+        for (Product product : products) {
+            String productName = product.getName();
+            CommandProduct groupedProduct = groupedMap.getOrDefault(productName, new CommandProduct(product, 0));
+            groupedProduct.setQuantity(groupedProduct.getQuantity() + 1);
+            groupedMap.put(productName, groupedProduct);
+        }
+
+        return new ArrayList<>(groupedMap.values());
     }
 }
