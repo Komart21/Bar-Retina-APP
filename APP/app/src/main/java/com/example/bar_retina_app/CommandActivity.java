@@ -1,6 +1,9 @@
 package com.example.bar_retina_app;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +23,15 @@ public class CommandActivity extends AppCompatActivity {
 
         TextView tableId = findViewById(R.id.tableId);
         tableId.setText(table);
+
+        Button backButton = findViewById(R.id.addButton); // Encontramos el botón
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CommandActivity.this, ProductsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         List<CommandProduct> groupedProducts = command.getGroupedProducts();
 

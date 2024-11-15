@@ -104,7 +104,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/returnButton"
+        android:id="@+id/addButton"
         android:layout_width="197dp"
         android:layout_height="48dp"
         android:layout_marginStart="2dp"
