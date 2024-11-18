@@ -1,1 +1,1 @@
-Bienvenido a Bar Retina 2
+Welcome to Bar Retina 2
