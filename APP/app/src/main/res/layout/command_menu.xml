@@ -15,7 +15,7 @@
         android:layout_marginTop="46dp"
         android:layout_marginEnd="38dp"
         android:fontFamily="@font/baloo_bhaijaan"
-        android:text="COMMAND"
+        android:text="ORDER"
         android:textAlignment="center"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"

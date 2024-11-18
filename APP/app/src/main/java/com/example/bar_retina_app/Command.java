@@ -9,7 +9,6 @@ public class Command {
     private ArrayList<Product> products;
     private String table;
     private String bartender;
-    private String state;
     private int totalPrice;
 
     public Command(int id, String table, String bartender) {
@@ -17,7 +16,6 @@ public class Command {
         this.table = table;
         this.bartender = bartender;
         this.totalPrice = 0;
-        this.state = state;
         this.products = new ArrayList<>();
     }
 
@@ -64,5 +62,13 @@ public class Command {
         }
 
         return new ArrayList<>(groupedMap.values());
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
