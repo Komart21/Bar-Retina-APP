@@ -27,6 +27,7 @@
         </activity>
 
         <activity android:name=".CommandActivity" />
+        <activity android:name=".TablesActivity" />
 
         <activity
             android:name=".ProductsActivity"
