@@ -70,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         file = new File(getFilesDir(), "CONFIG.xml");
 
-        deleteXML();
-
         if (file.exists()) {
 
             String url = getURL();
@@ -83,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Connected to: " + url, Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(MainActivity.this, ProductsActivity.class);
+            Intent intent = new Intent(MainActivity.this, TablesActivity.class);
             startActivity(intent);
         } else {
             setContentView(R.layout.login_menu);
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "Please enter a valid WebSocket URL", Toast.LENGTH_SHORT).show();
                 }
 
-                Intent intent = new Intent(MainActivity.this, ProductsActivity.class);
+                Intent intent = new Intent(MainActivity.this, TablesActivity.class);
                 startActivity(intent);
                 createXML(userName, serverUrl);
             });

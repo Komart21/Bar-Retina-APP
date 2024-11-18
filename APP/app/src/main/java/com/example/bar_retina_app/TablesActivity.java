@@ -23,14 +23,19 @@ import java.util.stream.Collectors;
 public class TablesActivity extends AppCompatActivity {
 
     private TableAdapter tableAdapter;
+    private ListView listView;
 
-    public static ArrayList<Table> tables;
+    public static ArrayList<Table> tables = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.table_menu);
+
+        listView = findViewById(R.id.listView);
+        tableAdapter = new TableAdapter(this, tables);
+        listView.setAdapter(tableAdapter);
     }
 
 
