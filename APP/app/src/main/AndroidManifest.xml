@@ -31,8 +31,7 @@
         <activity android:name=".CreateCommandActivity" />
 
         <activity
-            android:name=".ProductsActivity"
-            android:theme="@style/Theme.AppCompat.DayNight"/>
+            android:name=".ProductsActivity" />
 
 
         <meta-data

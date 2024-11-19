@@ -28,7 +28,8 @@ public class TableAdapter extends ArrayAdapter<Table> {
         TextView tableName = convertView.findViewById(R.id.tableName);
         TextView orderDescription = convertView.findViewById(R.id.orderDescription);
 
-        tableName.setText("Table " + currentItem.getTableId());
+        int name = currentItem.getTableId() + 1;
+        tableName.setText("Table " + name);
         if (currentItem.getCommand() == null) {
             orderDescription.setText("This table has no orders.");
         }

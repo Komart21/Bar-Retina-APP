@@ -6,6 +6,7 @@
     android:background="#FFFFFF"
     android:gravity="center_vertical">
 
+    <!-- Nombre del ítem -->
     <TextView
         android:id="@+id/itemName"
         android:layout_width="0dp"
@@ -16,12 +17,47 @@
         android:textSize="18sp"
         android:textColor="#000000" />
 
+    <!-- Precio por unidad -->
+    <TextView
+        android:id="@+id/itemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/baloo_bhaijaan"
+        android:text="0.00€"
+        android:textColor="#777777"
+        android:textSize="16sp" />
+
+    <!-- Botón para restar -->
+    <Button
+        android:id="@+id/decreaseButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#FF6200EE"
+        android:text="-"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <!-- Cantidad -->
     <TextView
         android:id="@+id/itemQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/baloo_bhaijaan"
+        android:gravity="center"
         android:text="1"
         android:textSize="18sp"
-        android:textColor="#555555" />
+        android:textColor="#555555"
+        android:layout_marginEnd="8dp" />
+
+    <!-- Botón para añadir -->
+    <Button
+        android:id="@+id/increaseButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:backgroundTint="#FF6200EE"
+        android:text="+"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 </LinearLayout>

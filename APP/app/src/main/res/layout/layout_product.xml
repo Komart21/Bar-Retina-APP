@@ -10,40 +10,45 @@
         android:id="@+id/productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/baloo_bhaijaan"
         android:text="Nombre del producto"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <!-- Descripción del producto -->
     <TextView
         android:id="@+id/productDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/voces"
         android:text="Descripción"
-        android:textSize="12sp"
-        android:layout_marginTop="5dp"/>
+        android:textSize="12sp" />
 
     <!-- Precio del producto -->
     <TextView
         android:id="@+id/productPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/voces"
         android:text="Precio"
-        android:textSize="14sp"
-        android:layout_marginTop="5dp"/>
+        android:textSize="14sp" />
 
     <!-- Campo para la cantidad -->
     <EditText
         android:id="@+id/productQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/baloo_bhaijaan"
         android:hint="Cantidad"
-        android:layout_marginTop="5dp"/>
+        android:inputType="number" />
 
     <Button
         android:id="@+id/addToOrderButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ADD"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/baloo_bhaijaan"
+        android:text="ADD" />
 </LinearLayout>
