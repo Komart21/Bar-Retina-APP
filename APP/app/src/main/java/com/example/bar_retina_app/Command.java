@@ -7,13 +7,13 @@ import java.util.List;
 public class Command {
     private int id;
     private ArrayList<Product> products;
-    private String table;
+    private int tableId;
     private String bartender;
     private int totalPrice;
 
-    public Command(int id, String table, String bartender) {
+    public Command(int id, int tableId, String bartender) {
         this.id = id;
-        this.table = table;
+        this.tableId = tableId;
         this.bartender = bartender;
         this.totalPrice = 0;
         this.products = new ArrayList<>();
@@ -35,12 +35,12 @@ public class Command {
         this.products.add(product);
     }
 
-    public String getTable() {
-        return table;
+    public int getTableId() {
+        return tableId;
     }
 
-    public void setTable(String table) {
-        this.table = table;
+    public void setTable(int tableId) {
+        this.tableId = tableId;
     }
 
     public String getBartender() {

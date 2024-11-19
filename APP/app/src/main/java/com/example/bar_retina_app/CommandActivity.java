@@ -13,27 +13,35 @@ import java.util.List;
 
 
 public class CommandActivity extends AppCompatActivity {
-    public static Command command = new Command(1, "Table 5", "John");
-
-    public static String table = command.getTable();
+    public static int currentTableId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.command_menu);
 
         TextView tableId = findViewById(R.id.tableId);
-        tableId.setText(table);
+        tableId.setText("Table " + currentTableId);
 
-        Button backButton = findViewById(R.id.addButton); // Encontramos el botón
-        backButton.setOnClickListener(new View.OnClickListener() {
+        Button addButton = findViewById(R.id.addButton); // Encontramos el botón
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProductsActivity.currentTableId = currentTableId;
                 Intent intent = new Intent(CommandActivity.this, ProductsActivity.class);
                 startActivity(intent);
             }
         });
 
-        List<CommandProduct> groupedProducts = command.getGroupedProducts();
+        Button backButton = findViewById(R.id.backButton); // Encontramos el botón
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CommandActivity.this, TablesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        List<CommandProduct> groupedProducts = TablesActivity.tables.get(currentTableId).getCommand().getGroupedProducts();
 
         CommandAdapter adapter = new CommandAdapter(this, groupedProducts);
         ListView listView = findViewById(R.id.listView);

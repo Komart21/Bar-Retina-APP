@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/Title" />
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/createOrderButton"
         android:layout_width="197dp"
         android:layout_height="48dp"
         android:layout_marginStart="107dp"

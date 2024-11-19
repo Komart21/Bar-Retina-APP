@@ -20,7 +20,7 @@ public class TableAdapter extends ArrayAdapter<Table> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_command_details, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_table, parent, false);
         }
 
         Table currentItem = getItem(position);
@@ -39,8 +39,16 @@ public class TableAdapter extends ArrayAdapter<Table> {
         Button viewOrder = convertView.findViewById(R.id.actionButton);
         viewOrder.setOnClickListener(v -> {
             if (currentItem.getCommand() == null) {
+                CreateCommandActivity.currentTableId = currentItem.getTableId();
+                CommandActivity.currentTableId = currentItem.getTableId();
                 Context a = getContext();
                 Intent intent = new Intent(a, CreateCommandActivity.class);
+                a.startActivity(intent);
+            }
+            else {
+                CommandActivity.currentTableId = currentItem.getTableId();
+                Context a = getContext();
+                Intent intent = new Intent(a, CommandActivity.class);
                 a.startActivity(intent);
             }
         });

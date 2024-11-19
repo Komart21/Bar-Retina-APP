@@ -25,7 +25,7 @@ public class ProductsActivity extends AppCompatActivity {
     private ListView listView;
     private CustomAdapter productoAdapter;
 
-    public static Command command;
+    public static int currentTableId;
 
     private Spinner tagSpinner;
     public static ArrayList<Product> products = new ArrayList<>();
@@ -65,7 +65,7 @@ public class ProductsActivity extends AppCompatActivity {
         productosFiltrados.addAll(products);
 
         listView = findViewById(R.id.listView);
-        productoAdapter = new CustomAdapter(this, productosFiltrados);
+        productoAdapter = new CustomAdapter(this, productosFiltrados, currentTableId);
         listView.setAdapter(productoAdapter);
 
         tagSpinner = findViewById(R.id.tagSpinner);

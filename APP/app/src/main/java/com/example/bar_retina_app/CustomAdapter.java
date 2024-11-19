@@ -16,12 +16,14 @@ import java.util.List;
 public class CustomAdapter extends ArrayAdapter<Product> {
     private Context context;
     private List<Product> productos;
+    private int currentTableId;
 
     // Constructor
-    public CustomAdapter(Context context, List<Product> productos) {
+    public CustomAdapter(Context context, List<Product> productos, int currentTableId) {
         super(context, 0, productos);  // Llamada al constructor base de ArrayAdapter
         this.context = context;
         this.productos = productos;
+        this.currentTableId = currentTableId;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class CustomAdapter extends ArrayAdapter<Product> {
 
             String mensaje = "Producto agregado: " + producto.getName() + " - Cantidad: " + cantidad;
             for (int i = 1; i <= cantidad; i++) {
-                CommandActivity.command.addProduct(producto);
+                TablesActivity.tables.get(currentTableId).getCommand().addProduct(producto);
             }
 
             Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show();

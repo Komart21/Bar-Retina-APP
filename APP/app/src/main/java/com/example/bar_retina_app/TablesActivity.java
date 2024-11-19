@@ -25,7 +25,7 @@ public class TablesActivity extends AppCompatActivity {
     private TableAdapter tableAdapter;
     private ListView listView;
 
-    public static ArrayList<Table> tables = new ArrayList<>();
+    public static ArrayList<Table> tables = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,13 @@ public class TablesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.table_menu);
 
+        if (tables == null) {
+            tables = new ArrayList<>();
+            for (int i = 0; i < 20; i++) {
+                Table table = new Table(i);
+                tables.add(table);
+            }
+        }
         listView = findViewById(R.id.listView);
         tableAdapter = new TableAdapter(this, tables);
         listView.setAdapter(tableAdapter);
