@@ -43,7 +43,7 @@ public class CommandActivity extends AppCompatActivity {
 
         List<CommandProduct> groupedProducts = TablesActivity.tables.get(currentTableId).getCommand().getGroupedProducts();
 
-        CommandAdapter adapter = new CommandAdapter(this, groupedProducts);
+        CommandAdapter adapter = new CommandAdapter(this, groupedProducts, currentTableId);
         ListView listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
     }
