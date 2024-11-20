@@ -70,7 +70,7 @@ public class CommandActivity extends AppCompatActivity {
                 String day = sdf.format(new Date());
 
                 // Obtener la ID de la comanda a partir del tableId y day
-                try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/barretina2", "username", "password")) {
+                try (Connection connection = DriverManager.getConnection("jdbc:mysql://10.0.2.2:3306/barretina2", "Admin", "BarRetina2*")) {
                     Integer commandId = getExistingCommandId(currentTableId, day, connection);
 
                     if (commandId != null) {
@@ -112,7 +112,7 @@ public class CommandActivity extends AppCompatActivity {
             List<CommandProduct> products = TablesActivity.tables.get(currentTableId).getCommand().getGroupedProducts();
 
             // Conectar con la base de datos e insertar/actualizar datos
-            try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/barretina2", "username", "password")) {
+            try (Connection connection = DriverManager.getConnection("jdbc:mysql://10.0.2.2:3306/barretina2", "Admin", "BarRetina2*")) {
                 connection.setAutoCommit(false); // Iniciar transacción
 
                 // Inserta o actualiza la comanda
