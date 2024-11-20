@@ -77,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
             ConnectToServer(url);
 
-            Toast.makeText(this, "Connected to: " + productes, Toast.LENGTH_SHORT).show();
-
             Toast.makeText(this, "Connected to: " + url, Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(MainActivity.this, TablesActivity.class);

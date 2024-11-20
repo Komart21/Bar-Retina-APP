@@ -56,7 +56,7 @@ public class ConfigActivity extends AppCompatActivity {
         });
 
         buttonBack.setOnClickListener(view -> {
-            Intent intent = new Intent(ConfigActivity.this, TablesActivity.this);
+            Intent intent = new Intent(ConfigActivity.this, TablesActivity.class);
             startActivity(intent);
         });
     }
