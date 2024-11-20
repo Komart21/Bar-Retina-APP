@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                             case "ready":
                                 String readyMessage = msgObj.getString("message");
                                 Log.i("Message", "Message recieved: " + readyMessage);
-                                runOnUiThread(() -> Toast.makeText(MainActivity.this, readyMessage, Toast.LENGTH_SHORT).show());
+                                runOnUiThread(() -> Toast.makeText(getApplicationContext(), readyMessage, Toast.LENGTH_SHORT).show());
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
