@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                                         NodeList nodeList1 = producte.getElementsByTagName("description");
                                         String description = nodeList1.item(0).getTextContent();
                                         NodeList nodeList2 = producte.getElementsByTagName("price");
-                                        String price = nodeList2.item(0).getTextContent();
+                                        String price = (nodeList2.item(0).getTextContent());
                                         NodeList nodeList3 = producte.getElementsByTagName("image");
                                         String image = nodeList3.item(0).getTextContent();
 

@@ -31,7 +31,8 @@ public class CreateCommandActivity extends AppCompatActivity {
         setContentView(R.layout.create_order_menu);
 
         TextView tableId = findViewById(R.id.tableId);
-        tableId.setText("Table " + currentTableId);
+        int visualTableId = currentTableId + 1;
+        tableId.setText("Table " + visualTableId);
 
         Button comandaButton = findViewById(R.id.createOrderButton);
 
@@ -45,6 +46,16 @@ public class CreateCommandActivity extends AppCompatActivity {
             }
         });
 
+        Button backButton = findViewById(R.id.backButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateCommandActivity.this, TablesActivity.class);
+                startActivity(intent);
+            }
+
+        });
     }
 }
 

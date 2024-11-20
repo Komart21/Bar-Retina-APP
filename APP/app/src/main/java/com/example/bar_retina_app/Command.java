@@ -9,13 +9,13 @@ public class Command {
     private ArrayList<Product> products;
     private int tableId;
     private String bartender;
-    private int totalPrice;
+    private float totalPrice;
 
     public Command(int id, int tableId, String bartender) {
         this.id = id;
         this.tableId = tableId;
         this.bartender = bartender;
-        this.totalPrice = 0;
+        this.totalPrice = 0.00F;
         this.products = new ArrayList<>();
     }
 
@@ -68,11 +68,19 @@ public class Command {
         return new ArrayList<>(groupedMap.values());
     }
 
-    public int getTotalPrice() {
+    public float getTotalPrice() {
+        calculateTotalPrice();
         return totalPrice;
     }
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public void calculateTotalPrice() {
+        totalPrice = 0.00F;
+        for (Product product : products) {
+            totalPrice += Float.parseFloat(product.getPrice());
+        }
     }
 }

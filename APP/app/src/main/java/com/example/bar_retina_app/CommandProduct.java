@@ -29,4 +29,14 @@ public class CommandProduct {
     public String toString() {
         return product.getName() + " x" + quantity;
     }
+
+    public void incrementQuantity() {
+        quantity++;
+    }
+
+    public void decrementQuantity() {
+        if (quantity > 0) {
+            quantity--;
+        }
+    }
 }

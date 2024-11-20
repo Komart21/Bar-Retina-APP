@@ -29,17 +29,20 @@
         android:textSize="16sp" />
 
     <!-- Botón para restar -->
-    <Button
-        android:id="@+id/decreaseButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="#FF6200EE"
-        android:text="-"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
 
     <!-- Cantidad -->
+
+    <Button
+        android:id="@+id/decreaseButton"
+        android:layout_width="57dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#FF6200EE"
+        android:fontFamily="@font/baloo_bhaijaan"
+        android:text="-"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
+
     <TextView
         android:id="@+id/itemQuantity"
         android:layout_width="wrap_content"
@@ -54,10 +57,10 @@
     <!-- Botón para añadir -->
     <Button
         android:id="@+id/increaseButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="57dp"
+        android:layout_height="wrap_content"
         android:backgroundTint="#FF6200EE"
         android:text="+"
         android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 </LinearLayout>
