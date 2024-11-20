@@ -50,5 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/baloo_bhaijaan"
+        android:backgroundTint="#d4af37"
         android:text="ADD" />
 </LinearLayout>

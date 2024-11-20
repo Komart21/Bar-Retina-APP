@@ -29,6 +29,7 @@
         <activity android:name=".CommandActivity" />
         <activity android:name=".TablesActivity" />
         <activity android:name=".CreateCommandActivity" />
+        <activity android:name=".ConfigActivity" />
 
         <activity
             android:name=".ProductsActivity" />

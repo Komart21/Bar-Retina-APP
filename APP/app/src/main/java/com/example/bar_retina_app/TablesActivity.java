@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -43,6 +44,16 @@ public class TablesActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         tableAdapter = new TableAdapter(this, tables);
         listView.setAdapter(tableAdapter);
+
+        ImageButton settingsButton = findViewById(R.id.settingsButton);
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TablesActivity.this, ConfigActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
