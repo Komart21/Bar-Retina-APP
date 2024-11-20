@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         if (file.exists()) {
 
             String url = getURL();
-            Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
 
             ConnectToServer(url);
 
@@ -166,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
                                 String tags = msgObj.getString("message");
                                 System.out.println(tags);
                                 break;
+                            case "ready":
+                                String readyMessage = msgObj.getString("message");
+                                runOnUiThread(() -> Toast.makeText(MainActivity.this, readyMessage, Toast.LENGTH_SHORT).show());
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
