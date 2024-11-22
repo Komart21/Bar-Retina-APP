@@ -11,8 +11,10 @@ firebaseDatabase = "21.0.0"
 okhttp = "4.9.3"
 websocket = "1.5.7"
 places = "4.1.0"
+mysqlConnector = "5.1.49"
 
 [libraries]
+mysql-connector = { group = "mysql", name = "mysql-connector-java", version.ref = "mysqlConnector" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

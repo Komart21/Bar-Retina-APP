@@ -69,27 +69,28 @@ public class CommandActivity extends AppCompatActivity {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String day = sdf.format(new Date());
 
-                // Obtener la ID de la comanda a partir del tableId y day
-                try (Connection connection = DriverManager.getConnection("jdbc:mysql://10.0.2.2:3306/barretina2", "Admin", "BarRetina2*")) {
-                    Integer commandId = getExistingCommandId(currentTableId, day, connection);
+                new Thread(() -> {
+                    try (Connection connection = DriverManager.getConnection("jdbc:mysql://10.0.2.2:3306/barretina2", "Admin", "BarRetina2*")) {
+                        Integer commandId = getExistingCommandId(currentTableId, day, connection);
 
-                    if (commandId != null) {
-                        // Eliminar la comanda de la base de datos
-                        deleteCommandFromDatabase(commandId, connection);
+                        if (commandId != null) {
+                            // Eliminar la comanda de la base de datos
+                            deleteCommandFromDatabase(commandId, connection);
 
-                        // Limpiar la comanda en la interfaz de usuario
-                        TablesActivity.tables.get(currentTableId).setCommand(null);
+                            // Limpiar la comanda en la interfaz de usuario
+                            TablesActivity.tables.get(currentTableId).setCommand(null);
 
-                        // Volver a la pantalla de selección de mesa
-                        Intent intent = new Intent(CommandActivity.this, TablesActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(CommandActivity.this, "Command not found.", Toast.LENGTH_SHORT).show();
+                            // Volver a la pantalla de selección de mesa
+                            Intent intent = new Intent(CommandActivity.this, TablesActivity.class);
+                            startActivity(intent);
+                        } else {
+                            System.out.println("Command not found.");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    Toast.makeText(CommandActivity.this, "Failed to delete command.", Toast.LENGTH_SHORT).show();
-                }
+
+                }).start();
 
                 TablesActivity.tables.get(currentTableId).setCommand(null);
                 Intent intent = new Intent(CommandActivity.this, CreateCommandActivity.class);
@@ -101,7 +102,7 @@ public class CommandActivity extends AppCompatActivity {
         sendButton.setOnClickListener(v -> {
             // Datos principales de la comanda
             int tableIdD = currentTableId;
-            String waiter = "Waiter Name"; // Cambia esto según tus datos
+            String waiter = MainActivity.waiterName;
             String state = "Pending"; // Estado inicial de la comanda
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String day = sdf.format(new Date());
@@ -112,21 +113,23 @@ public class CommandActivity extends AppCompatActivity {
             List<CommandProduct> products = TablesActivity.tables.get(currentTableId).getCommand().getGroupedProducts();
 
             // Conectar con la base de datos e insertar/actualizar datos
-            try (Connection connection = DriverManager.getConnection("jdbc:mysql://10.0.2.2:3306/barretina2", "Admin", "BarRetina2*")) {
-                connection.setAutoCommit(false); // Iniciar transacción
 
-                // Inserta o actualiza la comanda
-                int commandId = insertOrUpdateCommand(tableIdD, waiter, state, hour, day, connection);
+            new Thread(() -> {
+                try (Connection connection = DriverManager.getConnection("jdbc:mysql://10.0.2.2:3306/barretina2", "root", "1234")) {
+                    connection.setAutoCommit(false); // Iniciar transacción
 
-                // Actualiza los detalles de la comanda
-                updateCommandDetails(commandId, products, connection);
+                    // Inserta o actualiza la comanda
+                    int commandId = insertOrUpdateCommand(tableIdD, waiter, state, hour, day, connection);
 
-                connection.commit(); // Confirmar transacción
-                Toast.makeText(this, "Command sent successfully!", Toast.LENGTH_SHORT).show();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Failed to send command.", Toast.LENGTH_SHORT).show();
-            }
+                    // Actualiza los detalles de la comanda
+                    updateCommandDetails(commandId, products, connection);
+
+                    connection.commit(); // Confirmar transacción
+                    System.out.println("Order sent");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }).start();
         });
 
         List<CommandProduct> groupedProducts = TablesActivity.tables.get(currentTableId).getCommand().getGroupedProducts();
@@ -139,9 +142,9 @@ public class CommandActivity extends AppCompatActivity {
 
 
     public Integer getExistingCommandId(int tableId, String day, Connection connection) throws SQLException {
-        String query = "SELECT id FROM Command WHERE tableid = ? AND day = ?";
+        String query = "SELECT id FROM orders WHERE tableid = ? AND day = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, tableId);
+            pstmt.setInt(1, tableId + 1);
             pstmt.setString(2, day);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -157,14 +160,14 @@ public class CommandActivity extends AppCompatActivity {
 
         try {
             // Eliminar los detalles de la comanda
-            String deleteDetailsQuery = "DELETE FROM Command_details WHERE id_command = ?";
+            String deleteDetailsQuery = "DELETE FROM order_details WHERE id_order = ?";
             try (PreparedStatement pstmt = connection.prepareStatement(deleteDetailsQuery)) {
                 pstmt.setInt(1, commandId);
                 pstmt.executeUpdate();
             }
 
             // Eliminar la comanda
-            String deleteCommandQuery = "DELETE FROM Command WHERE id = ?";
+            String deleteCommandQuery = "DELETE FROM order WHERE id = ?";
             try (PreparedStatement pstmt = connection.prepareStatement(deleteCommandQuery)) {
                 pstmt.setInt(1, commandId);
                 pstmt.executeUpdate();
@@ -172,21 +175,19 @@ public class CommandActivity extends AppCompatActivity {
 
             // Confirmar transacción
             connection.commit();
-            Toast.makeText(this, "Command deleted successfully!", Toast.LENGTH_SHORT).show();
         } catch (SQLException e) {
             connection.rollback(); // Revertir la transacción en caso de error
             e.printStackTrace();
-            Toast.makeText(this, "Failed to delete command.", Toast.LENGTH_SHORT).show();
         }
     }
 
     public int insertOrUpdateCommand(int tableId, String waiter, String state, String hour, String day, Connection connection) throws SQLException {
         // Verifica si la comanda ya existe
-        Integer existingCommandId = getExistingCommandId(tableId, day, connection);
+        Integer existingCommandId = getExistingCommandId(tableId + 1, day, connection);
 
         if (existingCommandId != null) {
             // Actualiza la comanda existente
-            String updateQuery = "UPDATE Command SET waiter = ?, state = ?, hour = ? WHERE id = ?";
+            String updateQuery = "UPDATE orders SET waiter = ?, state = ?, hour = ? WHERE id = ?";
             try (PreparedStatement pstmt = connection.prepareStatement(updateQuery)) {
                 pstmt.setString(1, waiter);
                 pstmt.setString(2, state);
@@ -202,9 +203,9 @@ public class CommandActivity extends AppCompatActivity {
     }
 
     public int insertCommand(int tableId, String waiter, String state, String hour, String day, Connection connection) throws SQLException {
-        String query = "INSERT INTO Command (tableid, waiter, state, hour, day) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO orders (tableid, waiter, state, hour, day) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setInt(1, tableId);
+            pstmt.setInt(1, tableId + 1);
             pstmt.setString(2, waiter);
             pstmt.setString(3, state);
             pstmt.setString(4, hour);
@@ -222,15 +223,17 @@ public class CommandActivity extends AppCompatActivity {
         }
     }
     public void insertCommandDetails(int commandId, List<CommandProduct> products, Connection connection) throws SQLException {
-        String query = "INSERT INTO Command_details (id_command, id_products, product_name, price, state) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO order_details (id_order, id_products, product_name, price, state) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            int position = 1;
             for (CommandProduct product : products) {
                 pstmt.setInt(1, commandId);
-                pstmt.setInt(2, Integer.parseInt(product.getProduct().getId()));
+                pstmt.setInt(2, position);
                 pstmt.setString(3, product.getProduct().getName());
                 pstmt.setBigDecimal(4, BigDecimal.valueOf(Float.parseFloat(product.getProduct().getPrice())));
                 pstmt.setString(5, "Pending");
                 pstmt.addBatch();
+                position++;
             }
             pstmt.executeBatch();
         }
@@ -239,7 +242,7 @@ public class CommandActivity extends AppCompatActivity {
 
     public void updateCommandDetails(int commandId, List<CommandProduct> products, Connection connection) throws SQLException {
         // Elimina los detalles existentes para esta comanda
-        String deleteQuery = "DELETE FROM Command_details WHERE id_command = ?";
+        String deleteQuery = "DELETE FROM order_details WHERE id_order = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(deleteQuery)) {
             pstmt.setInt(1, commandId);
             pstmt.executeUpdate();

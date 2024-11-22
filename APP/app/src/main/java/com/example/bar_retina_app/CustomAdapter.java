@@ -2,15 +2,22 @@ package com.example.bar_retina_app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
+import android.graphics.Bitmap;
 
+import java.io.ByteArrayInputStream;
+import android.util.Base64;
 import java.util.List;
 
 public class CustomAdapter extends ArrayAdapter<Product> {
@@ -45,6 +52,9 @@ public class CustomAdapter extends ArrayAdapter<Product> {
         EditText quantityEditText = convertView.findViewById(R.id.productQuantity);
         quantityEditText.setText("1");
 
+        ImageView imageView = convertView.findViewById(R.id.productImage);
+        loadImageToView(imageView, producto.getImage());
+
         Button addToOrderButton = convertView.findViewById(R.id.addToOrderButton);
         addToOrderButton.setOnClickListener(v -> {
             String cantidadStr = quantityEditText.getText().toString();
@@ -66,5 +76,22 @@ public class CustomAdapter extends ArrayAdapter<Product> {
         });
 
         return convertView;
+    }
+
+    private void loadImageToView(ImageView imageView, String base64Image) {
+        try {
+            // Eliminar espacios en blanco del string Base64
+            base64Image = base64Image.replaceAll(" ", "");
+            byte[] imageBytes = Base64.decode(base64Image, Base64.DEFAULT);
+
+            // Convertir el arreglo de bytes en un Bitmap
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            imageView.setImageBitmap(decodedBitmap);
+
+        } catch (IllegalArgumentException e) {
+            Log.e("ImageLoading", "Error decoding Base64 image: " + e.getMessage(), e);
+        } catch (Exception e) {
+            Log.e("ImageLoading", "Error loading image: " + e.getMessage(), e);
+        }
     }
 }

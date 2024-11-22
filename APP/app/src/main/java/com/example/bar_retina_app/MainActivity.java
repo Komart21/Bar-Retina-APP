@@ -30,6 +30,7 @@ import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static ArrayList<Element> productes = new ArrayList<>();
     public static ArrayList<Product> objProductes = new ArrayList<>();
+    public static String waiterName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         if (file.exists()) {
 
             String url = getURL();
+            waiterName = getName();
 
             ConnectToServer(url);
 
@@ -92,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
                 String serverUrl = serverUrlEditText.getText().toString().trim();
                 String userName = userNameEditText.getText().toString().trim();
+                waiterName = userName;
+
                 if (!serverUrl.isEmpty()) {
                     ConnectToServer(serverUrl);
                     Log.i("WSS Client", "Connected to: " + serverUrl);
@@ -161,13 +166,34 @@ public class MainActivity extends AppCompatActivity {
                                     e.printStackTrace(); // Manejo de las excepciones
                                 }
                                 break;
+                            case "productswithimage":
+                                JSONArray array = msgObj.getJSONArray("message");
+
+                                for (int i = 0; i < array.length(); i++) {
+                                    JSONObject product = array.getJSONObject(i);
+
+                                    String id = product.getString("id");
+                                    String tags = product.getString("tags");
+                                    String name = product.getString("name");
+                                    String description = product.getString("description");
+                                    String price = product.getString("price");
+                                    String image = product.getString("image");
+
+                                    Product Obj = new Product(id, tags, name, description, price, image);
+                                    ProductsActivity.products.add(Obj);
+
+                                }
+                                Toast.makeText(getApplicationContext(), "Json correctly loaded", Toast.LENGTH_SHORT).show();
+                                break;
+
+
                             case "tags":
                                 String tags = msgObj.getString("message");
                                 System.out.println(tags);
                                 break;
                             case "ready":
                                 String readyMessage = msgObj.getString("message");
-                                Log.i("Message", "Message recieved: " + readyMessage);
+                                Log.d("WebSocket", "Message recieved: " + readyMessage);
                                 runOnUiThread(() -> Toast.makeText(getApplicationContext(), readyMessage, Toast.LENGTH_SHORT).show());
                         }
                     } catch (Exception e) {
@@ -183,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         JSONObject message = new JSONObject();
                         message.put("message", "products");
-                        message.put("type", "products");
+                        message.put("type", "productswithimage");
                         send(message.toString());
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -251,6 +277,25 @@ public class MainActivity extends AppCompatActivity {
 
             // Expresión XPath para seleccionar el elemento URL
             XPathExpression expr = xPath.compile("/login/URL");
+
+            // Evaluar la            // Evaluar la expresión XPath y obtener el valor del nodo expresión XPath y obtener el valor del nodo
+            return (String) expr.evaluate(doc, XPathConstants.STRING);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String getName() {
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(file);
+            XPathFactory xPathFactory = XPathFactory.newInstance();
+            XPath xPath = xPathFactory.newXPath();
+
+            // Expresión XPath para seleccionar el elemento URL
+            XPathExpression expr = xPath.compile("/login/username");
 
             // Evaluar la expresión XPath y obtener el valor del nodo
             return (String) expr.evaluate(doc, XPathConstants.STRING);
