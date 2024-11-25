@@ -100,10 +100,10 @@ public class CommandActivity extends AppCompatActivity {
             // Datos principales de la comanda
             int tableIdD = currentTableId;
             String waiter = MainActivity.waiterName;
-            String state = "Pending"; // Estado inicial de la comanda
+            String state = "pending"; // Estado inicial de la comanda
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String day = sdf.format(new Date());
-            SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
             String hour = sdf2.format(new Date());
 
             // Productos de la comanda
@@ -141,7 +141,7 @@ public class CommandActivity extends AppCompatActivity {
     public Integer getExistingCommandId(int tableId, String day, Connection connection) throws SQLException {
         String query = "SELECT id FROM orders WHERE tableid = ? AND day = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, tableId + 1);
+            pstmt.setInt(1, tableId);
             pstmt.setString(2, day);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -181,6 +181,8 @@ public class CommandActivity extends AppCompatActivity {
     public int insertOrUpdateCommand(int tableId, String waiter, String state, String hour, String day, Connection connection) throws SQLException {
         // Verifica si la comanda ya existe
         Integer existingCommandId = getExistingCommandId(tableId + 1, day, connection);
+
+        System.out.println(existingCommandId);
 
         if (existingCommandId != null) {
             // Actualiza la comanda existente
