@@ -6,11 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.libraries.places.api.model.LocalDate;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -20,7 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -110,7 +107,7 @@ public class CommandActivity extends AppCompatActivity {
             String hour = sdf2.format(new Date());
 
             // Productos de la comanda
-            List<CommandProduct> products = TablesActivity.tables.get(currentTableId).getCommand().getGroupedProducts();
+            ArrayList<Product> products = TablesActivity.tables.get(currentTableId).getCommand().getProducts();
 
             // Conectar con la base de datos e insertar/actualizar datos
 
@@ -222,15 +219,15 @@ public class CommandActivity extends AppCompatActivity {
             }
         }
     }
-    public void insertCommandDetails(int commandId, List<CommandProduct> products, Connection connection) throws SQLException {
+    public void insertCommandDetails(int commandId, ArrayList<Product> products, Connection connection) throws SQLException {
         String query = "INSERT INTO order_details (id_order, id_products, product_name, price, state) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             int position = 1;
-            for (CommandProduct product : products) {
+            for (Product product : products) {
                 pstmt.setInt(1, commandId);
                 pstmt.setInt(2, position);
-                pstmt.setString(3, product.getProduct().getName());
-                pstmt.setBigDecimal(4, BigDecimal.valueOf(Float.parseFloat(product.getProduct().getPrice())));
+                pstmt.setString(3, product.getName());
+                pstmt.setBigDecimal(4, BigDecimal.valueOf(Float.parseFloat(product.getPrice())));
                 pstmt.setString(5, "Pending");
                 pstmt.addBatch();
                 position++;
@@ -240,7 +237,7 @@ public class CommandActivity extends AppCompatActivity {
     }
 
 
-    public void updateCommandDetails(int commandId, List<CommandProduct> products, Connection connection) throws SQLException {
+    public void updateCommandDetails(int commandId, ArrayList<Product> products, Connection connection) throws SQLException {
         // Elimina los detalles existentes para esta comanda
         String deleteQuery = "DELETE FROM order_details WHERE id_order = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(deleteQuery)) {
