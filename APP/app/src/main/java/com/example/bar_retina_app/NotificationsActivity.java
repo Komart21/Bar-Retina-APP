@@ -41,16 +41,19 @@ public class NotificationsActivity extends AppCompatActivity {
 
         Button deleteButton = findViewById(R.id.deleteButton);
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notifications.clear();
-            }
-        });
 
         NotificationAdapter adapter = new NotificationAdapter(this, notifications);
         ListView listView = findViewById(R.id.notificationsListView);
         listView.setAdapter(adapter);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notifications.clear();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
 
     }
 }
