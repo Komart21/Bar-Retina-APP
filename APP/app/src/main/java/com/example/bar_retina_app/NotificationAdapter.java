@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_command_details, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_notification, parent, false);
         }
 
         Notification currentItem = getItem(position);
@@ -32,7 +33,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
         TextView notificationDate = convertView.findViewById(R.id.notificationDate);
         notificationDate.setText(currentItem.getDate());
 
-        Button actionButton = convertView.findViewById(R.id.actionButton);
+        ImageButton actionButton = convertView.findViewById(R.id.actionButton);
 
         actionButton.setOnClickListener(v -> {
             remove(currentItem);
