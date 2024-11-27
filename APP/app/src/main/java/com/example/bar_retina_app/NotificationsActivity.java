@@ -21,14 +21,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notification_menu);
-
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
-        String hour = sdf2.format(new Date());
-        String readyMessage = "String de prueba";
-        notifications.add(new Notification(readyMessage, hour));
-
-
-
+        
         Button backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
