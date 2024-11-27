@@ -43,7 +43,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -183,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
                                     ProductsActivity.products.add(Obj);
 
                                 }
-                                Toast.makeText(getApplicationContext(), "Json correctly loaded", Toast.LENGTH_SHORT).show();
                                 break;
 
 
@@ -194,7 +195,9 @@ public class MainActivity extends AppCompatActivity {
                             case "ready":
                                 String readyMessage = msgObj.getString("message");
                                 Log.d("WebSocket", "Message recieved: " + readyMessage);
-                                runOnUiThread(() -> Toast.makeText(getApplicationContext(), readyMessage, Toast.LENGTH_SHORT).show());
+                                SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+                                String hour = sdf2.format(new Date());
+                                NotificationsActivity.notifications.add(new Notification(readyMessage, hour));
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

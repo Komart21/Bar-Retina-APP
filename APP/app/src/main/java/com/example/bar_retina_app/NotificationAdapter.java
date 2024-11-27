@@ -12,7 +12,7 @@ import java.util.List;
 
 public class NotificationAdapter extends ArrayAdapter<Notification> {
 
-    public NotificationAdapter(Context context, List<Notification> notifications, int currentTableId) {
+    public NotificationAdapter(Context context, List<Notification> notifications) {
         super(context, 0, notifications);
 
 
@@ -26,7 +26,19 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 
         Notification currentItem = getItem(position);
 
-        
+        TextView notificationTitle = convertView.findViewById(R.id.notificationTitle);
+        assert currentItem != null;
+        notificationTitle.setText(currentItem.getMessage());
+        TextView notificationDate = convertView.findViewById(R.id.notificationDate);
+        notificationDate.setText(currentItem.getDate());
+
+        Button actionButton = convertView.findViewById(R.id.actionButton);
+
+        actionButton.setOnClickListener(v -> {
+            remove(currentItem);
+            notifyDataSetChanged();
+        });
+
 
         return convertView;
     }

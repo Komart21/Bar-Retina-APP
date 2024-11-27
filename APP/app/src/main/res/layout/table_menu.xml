@@ -14,8 +14,21 @@
         android:layout_marginEnd="356dp"
         android:background="?attr/selectableItemBackground"
         android:contentDescription="Settings"
-        android:src="@android:drawable/ic_menu_manage"
+        android:src="@drawable/ic_settings"
         app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerInside"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
+        android:id="@+id/notificationButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="Notifications"
+        android:src="@drawable/ic_notifications"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerInside"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

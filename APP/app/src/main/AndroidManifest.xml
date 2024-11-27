@@ -30,6 +30,7 @@
         <activity android:name=".TablesActivity" />
         <activity android:name=".CreateCommandActivity" />
         <activity android:name=".ConfigActivity" />
+        <activity android:name=".NotificationsActivity" />
 
         <activity
             android:name=".ProductsActivity" />

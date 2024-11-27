@@ -7,6 +7,21 @@
     android:layout_height="match_parent"
     android:background="#F5F3D6">
 
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="109dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="4dp"
+        android:layout_weight="1"
+        android:backgroundTint="#d4af37"
+        android:fontFamily="@font/baloo_bhaijaan"
+        android:text="BACK"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Título -->
     <TextView
         android:id="@+id/Title"

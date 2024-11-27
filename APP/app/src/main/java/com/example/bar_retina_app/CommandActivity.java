@@ -112,7 +112,7 @@ public class CommandActivity extends AppCompatActivity {
             // Conectar con la base de datos e insertar/actualizar datos
 
             new Thread(() -> {
-                try (Connection connection = DriverManager.getConnection("jdbc:mysql://10.0.2.2:3306/barretina2", "root", "1234")) {
+                try (Connection connection = DriverManager.getConnection("jdbc:mysql://10.0.2.2:3306/barretina2", "root", "superlocal")) {
                     connection.setAutoCommit(false); // Iniciar transacción
 
                     // Inserta o actualiza la comanda

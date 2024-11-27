@@ -54,6 +54,16 @@ public class TablesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ImageButton notificationsButton = findViewById(R.id.notificationButton);
+
+        notificationsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TablesActivity.this, NotificationsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
